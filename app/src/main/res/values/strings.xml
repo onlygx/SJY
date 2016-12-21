@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">时交易</string>
+    <string name="action_settings">设置</string>
+
+    <string name="set_title">提醒</string>
+    <string name="set_remind_title">推送提醒</string>
+    <!--<string name="set_voice_title">声音</string>-->
+</resources>
