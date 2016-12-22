@@ -2,6 +2,7 @@ package com.elangzhi.sjy.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -21,6 +22,10 @@ import org.xutils.x;
 @ContentView(R.layout.activity_settings)
 public class SettingsActivity extends AppCompatActivity {
 
+
+    @ViewInject(R.id.toolbar)
+    Toolbar toolbar;
+
     @ViewInject(R.id.set_remind)
     Switch setRemind;
 
@@ -28,6 +33,23 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
+        initActionBar();
+
+    }
+
+
+    private void initActionBar() {
+
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationIcon(R.drawable.jpush_ic_richpush_actionbar_back);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Event(value = R.id.set_remind , type = CompoundButton.OnCheckedChangeListener.class)

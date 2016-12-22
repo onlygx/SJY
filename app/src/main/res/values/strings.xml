@@ -5,4 +5,7 @@
     <string name="set_title">提醒</string>
     <string name="set_remind_title">推送提醒</string>
     <!--<string name="set_voice_title">声音</string>-->
+
+    <string name="txt_variety">品种：</string>
+    <string name="txt_period">周期：</string>
 </resources>

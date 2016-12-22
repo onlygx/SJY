@@ -8,19 +8,26 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.elangzhi.sjy.R;
+import com.elangzhi.sjy.beans.Period;
 import com.elangzhi.sjy.beans.Tip;
 import com.elangzhi.sjy.beans.Trade;
 import com.elangzhi.sjy.beans.TradeList;
+import com.elangzhi.sjy.beans.Variety;
 import com.elangzhi.sjy.utils.DbUtil;
 import com.elangzhi.sjy.utils.GsonUtil;
 import com.elangzhi.sjy.utils.Logger;
+import com.elangzhi.sjy.utils.TypeUtil;
 import com.elangzhi.sjy.utils.Urls;
 import com.google.gson.Gson;
 
@@ -31,6 +38,7 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ContentView(R.layout.activity_main)
@@ -39,19 +47,80 @@ public class MainActivity extends AppCompatActivity {
     @ViewInject(R.id.toolbar)
     Toolbar toolbar;
 
-    @ViewInject(R.id.tv_show)
-    TextView tvShow;
+    @ViewInject(R.id.line_variety)
+    LinearLayout lineVariety;
+
+    @ViewInject(R.id.line_period)
+    LinearLayout linePeriod;
+
+    @ViewInject(R.id.rg_variety)
+    RadioGroup rgVariety;
+
+    @ViewInject(R.id.rg_period)
+    RadioGroup rgPeriod;
+
+    List<RadioButton> varietyButtonList = new ArrayList<>();
+    List<RadioButton> periodButtonList = new ArrayList<>();
+
+    /*@ViewInject(R.id.tv_show)
+    TextView tvShow;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
         setSupportActionBar(toolbar);
+
+        createType();
     }
 
     /**
-     * 加载历史数据
+     * 初始化分类标签
      */
+    private void createType() {
+
+        for(Variety variety : TypeUtil.getVarietyList()){
+            RadioButton rbItem = createTypeButton(variety);
+            rgVariety.addView(rbItem);
+            varietyButtonList.add(rbItem);
+        }
+
+        for(Period period : TypeUtil.getPeriodList()){
+            RadioButton rbItem = createTypeButton(period);
+            rgPeriod.addView(rbItem);
+            periodButtonList.add(rbItem);
+        }
+
+    }
+
+    /**
+     * 分类按钮创建
+     * @param variety 品种
+     * @return 按钮
+     */
+    private RadioButton createTypeButton(Variety variety){
+        RadioButton button = (RadioButton) getLayoutInflater().inflate(R.layout.type_menu,null);
+        button.setText(variety.getName());
+        button.setTag(variety);
+        return button;
+    }
+
+    /**
+     * 分类按钮创建
+     * @param period 周期
+     * @return 按钮
+     */
+    private RadioButton createTypeButton(Period period){
+        RadioButton button = (RadioButton) getLayoutInflater().inflate(R.layout.type_menu_period,null);
+        button.setText(period.getName());
+        button.setTag(period);
+        return button;
+    }
+
+
+
+
+/*
     @Event(R.id.btn_init)
     private void init(View view) {
         RequestParams params = new RequestParams(Urls.TRADE);
@@ -86,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 
     /**
      * 保存历史结果

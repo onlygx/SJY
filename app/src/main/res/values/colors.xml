@@ -3,4 +3,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="typeTextColor">#0072B0</color>
+    <color name="typeItemText">#7A7E81</color>
+    <color name="typeItemBg">#EBF5FF</color>
+    <color name="typeItemCheckedText">#FEFEFE</color>
+    <color name="typeItemCheckedBg">#02A3FB</color>
+
+
 </resources>

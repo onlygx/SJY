@@ -1,6 +1,5 @@
 package com.elangzhi.sjy.beans;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
