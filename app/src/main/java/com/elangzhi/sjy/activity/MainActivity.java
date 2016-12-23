@@ -3,6 +3,7 @@ package com.elangzhi.sjy.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -70,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
         setSupportActionBar(toolbar);
-
         createType();
     }
 
@@ -199,12 +199,45 @@ public class MainActivity extends AppCompatActivity {
         return DbUtil.searchByType(varietyId,periodId,tradeList);
     }
 
+    /**
+     * 更改消息提醒状态
+     */
+    private void changeNotifyStatus() {
+        SharedPreferences sp = getSharedPreferences("sjy", Context.MODE_PRIVATE);
+        //取出来 添加一条
+        String tradeListString = sp.getString("notify", null);
+        if (tradeListString != null && !"".equals(tradeListString)) {
+            //重新存进去
+            SharedPreferences.Editor editor = sp.edit();
+            if ("1".equals(tradeListString)) {
+                editor.putString("notify", "0");
+            } else {
+                editor.putString("notify", "1");
+            }
+            editor.apply();
+        }
+    }
 
+    /**
+     * 获取消息提醒状态
+     */
+    private String getNotifyStatus(){
+        SharedPreferences sp = getSharedPreferences("sjy", Context.MODE_PRIVATE);
+        //取出来 添加一条
+        String tradeListString = sp.getString("notify",null);
+        if(tradeListString != null && !"".equals(tradeListString)){
+            return tradeListString;
+        }else{
+            return "1";
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        //MenuItem item = menu.getItem(R.mipmap.ic_notification_on);
         return true;
     }
 
@@ -216,8 +249,24 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             startActivity(new Intent(MainActivity.this,SettingsActivity.class));
+            return true;
+        }else if(id == R.id.action_test1){
+            startActivity(new Intent(MainActivity.this,Test1Activity.class));
+            return true;
+        }else */
+        if(id == R.id.action_notification){
+            String nowStatus = getNotifyStatus();
+            //当前如果是1 代表要关闭提醒 即改为0
+            if("1".equals(nowStatus)){
+                item.setIcon(R.mipmap.ic_notification_off);
+                //TODO 关闭提醒
+            }else{
+                item.setIcon(R.mipmap.ic_notification_on);
+                //TODO 开启提醒
+            }
+            changeNotifyStatus();
             return true;
         }
 

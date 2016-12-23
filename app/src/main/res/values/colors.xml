@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="barPrimaryColor">#02A3FB</color>
+
     <color name="typeTextColor">#0072B0</color>
     <color name="typeItemText">#7A7E81</color>
     <color name="typeItemBg">#EBF5FF</color>
